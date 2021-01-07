@@ -1,41 +1,41 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 const App = () => {
   const [text, setText] = useState('');
+  const [count, setCount] = useState(0);
+
+  const onClickCounter = () => {
+    setCount(count + 1);
+  };
+
   const onChangeText = (event) => setText(event.target.value);
-  const profiles = [
-    { name: 'Taro', age: 10 },
-    { name: 'Hanako', age: 5 },
-    { name: 'noname' },
-  ];
 
   return (
-    <div>
-      {profiles.map((profile, index) => {
-        return <User name={profile.name} age={profile.age} key={index} />;
-      })}
-      <h1>{text}</h1>
-      <input type="text" value={text} onChange={onChangeText} />
-    </div>
+    <>
+      <Counter count={count} onClick={onClickCounter} />
+      <Text text={text} onChange={onChangeText} />
+    </>
   );
 };
 
-const User = (props) => {
-  const { name, age } = props;
-
+const Counter = (props) => {
+  const { count, onClick } = props;
   return (
-    <div>
-      HI I am {name}, {age} years old.
-    </div>
+    <>
+      <p>{count}</p>
+      <button onClick={onClick}>Count Up!</button>
+    </>
   );
 };
 
-User.propTypes = {
-  name: PropTypes.string,
-  age: PropTypes.number,
+const Text = (props) => {
+  const { text, onChange } = props;
+  return (
+    <>
+      <p>{text}</p>
+      <input value={text} onChange={onChange} />
+    </>
+  );
 };
-
-User.defaultProps = { age: 1 };
 
 export default App;
