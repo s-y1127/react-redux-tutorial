@@ -4,26 +4,35 @@ const App = () => {
   const [text, setText] = useState('');
   const [count, setCount] = useState(0);
 
-  const onClickCounter = () => {
+  const onClickCountUp = () => {
     setCount(count + 1);
+  };
+  const onClickCountDown = () => {
+    setCount(count - 1);
   };
 
   const onChangeText = (event) => setText(event.target.value);
 
   return (
     <>
-      <Counter count={count} onClick={onClickCounter} />
+      <Counter
+        count={count}
+        onClickCountUp={onClickCountUp}
+        onClickCountDown={onClickCountDown}
+      />
       <Text text={text} onChange={onChangeText} />
     </>
   );
 };
 
 const Counter = (props) => {
-  const { count, onClick } = props;
+  const { count, onClickCountUp, onClickCountDown } = props;
   return (
     <>
       <p>{count}</p>
-      <button onClick={onClick}>Count Up!</button>
+      <br />
+      <button onClick={onClickCountUp}>Count Up!</button>
+      <button onClick={onClickCountDown}>Count Down!</button>
     </>
   );
 };
