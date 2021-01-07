@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const App = () => {
   const [text, setText] = useState('');
@@ -28,6 +29,11 @@ const User = (props) => {
       HI I am {name}, {age} years old.
     </div>
   );
+};
+
+User.propTypes = {
+  name: PropTypes.string,
+  age: PropTypes.number,
 };
 
 User.defaultProps = { age: 1 };
