@@ -1,50 +1,26 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-const App = () => {
-  const [text, setText] = useState('');
-  const [count, setCount] = useState(0);
+import { increment, decrement } from '../actions';
 
-  const onClickCountUp = () => {
-    setCount(count + 1);
-  };
-  const onClickCountDown = () => {
-    setCount(count - 1);
-  };
+class App extends Component {
+  render() {
+    const props = this.props;
 
-  const onChangeText = (event) => setText(event.target.value);
+    return (
+      <React.Fragment>
+        <div>count :{props.value}</div>
+        <button onClick={props.increment}>+1</button>
+        <button onClick={props.decrement}>-1</button>
+      </React.Fragment>
+    );
+  }
+}
 
-  return (
-    <>
-      <Counter
-        count={count}
-        onClickCountUp={onClickCountUp}
-        onClickCountDown={onClickCountDown}
-      />
-      <Text text={text} onChange={onChangeText} />
-    </>
-  );
-};
+const mapStateToProps = (state) => ({ value: state.count.value });
+const mapDispatchToProps = (dispatch) => ({
+  increment: () => dispatch(increment()),
+  decrement: () => dispatch(decrement()),
+});
 
-const Counter = (props) => {
-  const { count, onClickCountUp, onClickCountDown } = props;
-  return (
-    <>
-      <p>{count}</p>
-      <br />
-      <button onClick={onClickCountUp}>Count Up!</button>
-      <button onClick={onClickCountDown}>Count Down!</button>
-    </>
-  );
-};
-
-const Text = (props) => {
-  const { text, onChange } = props;
-  return (
-    <>
-      <p>{text}</p>
-      <input value={text} onChange={onChange} />
-    </>
-  );
-};
-
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
